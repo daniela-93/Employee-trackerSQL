@@ -1,7 +1,20 @@
+DROP TABLE IF EXISTS employees;
+DROP TABLE IF EXISTS roles;
+DROP TABLE IF EXISTS department;
+
+CREATE TABLE department (
+  dept_name VARCHAR(30) UNIQUE NOT NULL
+);
+CREATE TABLE roles (
+ title VARCHAR(30)  NOT NULL,
+salary DECIMAL NOT NULL,
+department_id INTEGER NOT NULL
+
+);
 CREATE TABLE employees (
-  id INTEGER PRIMARY KEY,
+ 
   first_name VARCHAR(30) NOT NULL,
   last_name VARCHAR(30) NOT NULL,
-  role_id BOOLEAN NOT NULL,
-  manager_id BOOLEAN NOT NULL 
+   role_id INTEGER PRIMARY KEY,
+   manager_id INTEGER NULL
 );
