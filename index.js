@@ -14,18 +14,19 @@ const connection = mysql.createConnection({
   database: 'tracker_db'
 });
 
-connection.connect(function(err) {
+connection.connect (function(err) {
   if (err) {
-      console.log('Error connecting to DB');
-      return;
-  }
-  console.log(`
-  ----------------
-  EMPLOYEE TRACKER
-  ----------------
-  `);
-  promptMenu();
+  console.log("Connected!");
+  return;
+}
+console.log(`
+----------------
+EMPLOYEE TRACKER
+----------------
+`);
+promptMenu();
 });
+  
 
 
 function promptMenu() {
@@ -88,4 +89,34 @@ function promptMenu() {
               break;
       }
   })
+};
+// function view table of alll employees //
+
+function viewEmployees() {
+  const sql = "SELECT employee.id, employee.first_name, employee.last_name, role.title, role.salary, department.name AS department, CONCAT(e.first_name, ' ', e.last_name) AS manager FROM employee INNER JOIN role ON role.id = employee.role_id INNER JOIN department ON department.id = role.department_id LEFT JOIN employee e ON employee.manager_id = e.id;";
+  connection.query(sql, (err, res) => {
+      if (err) throw err;
+      console.table(res);
+      promptMenu();
+  });
+};
+
+// function to view table of all roles
+function viewRoles() {
+    const sql = "SELECT role.id, role.title, role.salary, department.name AS department FROM role INNER JOIN department ON role.department_id = department.id;";
+    connection.query(sql, (err, res) => {
+        if (err) throw err;
+        console.table(res);
+        promptMenu();
+    });
+};
+
+// function to view table of all departments
+function viewDepartments() {
+    const sql = "SELECT * FROM department;";
+    connection.query(sql, (err, res) => {
+        if (err) throw err;
+        console.table(res);
+        promptMenu();
+    });
 };
