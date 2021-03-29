@@ -6,9 +6,9 @@
   "scripts": {
     "test": "jest",
     "migrate": "sqlite3 db/tracker.db < db/schema.sql",
-    "seed": "sqlite3 db/tracker.db < db/seeds.sql",
-    "db": "sqlite3 db/tracker.db",
-    "start": "node server.js"
+"seed": "sqlite3 db/tracker.db < db/seeds.sql",
+"db": "sqlite3 db/tracker.db",
+"start": "node index.js"
   },
   "repository": {
     "type": "git",
@@ -20,7 +20,10 @@
     "url": "https://github.com/daniela-93/Employee-trackerSQL/issues"
   },
   "homepage": "https://github.com/daniela-93/Employee-trackerSQL#readme",
-  "devDependencies": {
-    "jest": "^26.6.3"
+  "dependencies": {
+    "console.table": "^0.10.0",
+    "express": "^4.17.1",
+    "inquirer": "^8.0.0",
+    "sqlite3": "^5.0.2"
   }
 }
