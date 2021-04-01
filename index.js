@@ -146,7 +146,7 @@ function addDepartment() {
 // function to return department name for add Role
 let departmentChoices = [];
 function selectDepartment() {
-    connection.query("SELECT * FROM department", function(err, res) {
+    connection.query("SELECT * FROM tracker_db.department", function(err, res) {
         if (err) throw err;
         for (let i = 0; i < res.length; i++) {
             departmentChoices.push(res[i].name);
@@ -159,7 +159,7 @@ function selectDepartment() {
 // function to return role titles for add employee
 let roleChoices = [];
 function selectRole() {
-    connection.query("SELECT * FROM role", function(err, res) {
+    connection.query("SELECT * FROM tracker_db.roles", function(err, res) {
         if (err) throw err;
         for (let i=0; i < res.length; i++) {
             roleChoices.push(res[i].title);
@@ -171,7 +171,7 @@ function selectRole() {
 // function to return managers for add employee
 let employeeChoices = [];
 function selectEmployee() {
-    connection.query("SELECT CONCAT(first_name, ' ', last_name) AS full_name FROM employee", function(err, res) {
+    connection.query("SELECT * FROM tracker_db.employee", function(err, res) {
         if (err) throw err;
         for (let i=0; i < res.length; i++) {
             employeeChoices.push(res[i].full_name);
@@ -195,15 +195,15 @@ function addRole() {
         },
         {
             type: 'list',
-            name: 'roleDepartment',
+            name: 'Department-ID',
             message: "Select the Department: ",
             choices: selectDepartment()
         }
     ])
     .then(function(answers) {
         let departmentId = selectDepartment().indexOf(answers.roleDepartment) + 1;
-        const sql = "INSERT INTO role (title, salary, department_id) VALUES (?,?,?)";
-        const params = [answers.name, answers.salary, departmentId];
+        const sql = "INSERT INTO roles (title, salary, department_id) VALUES (?,?,?)";
+        const params = [answers.title, answers.salary, departmentId];
         connection.query(sql, params, (err, res) => {
             if (err) throw err;
             console.log(`Added New Role: ${answers.name}.`);
@@ -242,7 +242,7 @@ function addEmployee() {
         let roleId = selectRole().indexOf(answers.role) + 1;
         let managerid = selectEmployee().indexOf(answers.manager) + 1;
         const sql = "INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?,?,?,?)";
-        const params = [answers.firstName, answers.lastName, roleId, managerid];
+        const params = [answers.firstName, answers.lastName, roleId, managerd];
         connection.query(sql, params, (err, res) => {
             if (err) throw err;
             console.log(`Added New Employee: ${answers.firstName} ${answers.lastName}`);
@@ -252,7 +252,7 @@ function addEmployee() {
 };
 
 function updateEmployee() {
-    const sql = "SELECT employee.id, employee.first_name, employee.last_name, role.title, role.salary, department.name AS department, CONCAT(e.first_name, ' ', e.last_name) AS manager FROM employee INNER JOIN role ON role.id = employee.role_id INNER JOIN department ON department.id = role.department_id LEFT JOIN employee e ON employee.manager_id = e.id;";
+    const sql = "SELECT * FROM tracker_db.employee ";
     connection.query(sql, (err, res) => {
         if (err) throw err;
         console.table(res);
