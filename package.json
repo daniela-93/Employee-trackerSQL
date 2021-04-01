@@ -6,9 +6,9 @@
   "scripts": {
     "test": "jest",
     "migrate": "sqlite3 db/tracker.db < db/schema.sql",
-"seed": "sqlite3 db/tracker.db < db/seeds.sql",
-"db": "sqlite3 db/tracker.db",
-"start": "node index.js"
+    "seed": "sqlite3 db/tracker.db < db/seeds.sql",
+    "db": "sqlite3 db/tracker.db",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
