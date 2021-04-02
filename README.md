@@ -18,6 +18,8 @@ From the command line, run
 node index.js 
 
 to start the application and view the main menu of options. Continue through the prompts to edit and update the employee database.
+# Video
+<a href="https://youtu.be/6AFpM0G_jc0" target="_blank">Link</a>
 
 # Contribution 
 Made by Daniela Acuna 
